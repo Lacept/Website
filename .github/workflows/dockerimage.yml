@@ -10,5 +10,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag testproj:$(date +%s)
+    
+    - name: Docker build
+      run: docker build -t testproj:latest . && docker save testproj:latest | gzip > latestserver.tar.gz; dir
+    
+    - uses: actions/upload-artifact@v1
+      with:
+        name: server
+        path: latestserver.tar.gz
