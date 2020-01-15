@@ -26,7 +26,8 @@
 			<div id="resultContainer">
 				<select v-model="selectedSubject.result" :size="this.addedSubjects.list.size + Object.keys(this.addedSubjects.formatted).length">
 					<optgroup v-for="(val, cat) in addedSubjects.formatted" v-bind:label="cat">
-						<option v-for="sub in val">{{ sub }}</option>
+						<option v-for="sub in val" v-if="sub.results" :value="sub.subject">{{ sub.subject }} ({{ sub.results }})</option>
+						<option v-else :value="sub.subject">{{ sub.subject }}</option>
 					</optgroup>
 				</select>
 			</div>
@@ -108,9 +109,10 @@
 						unique[backwardCat[i]] = [];
 					
 					if (this.results[i])
-						unique[backwardCat[i]].push(`${i} (${this.results[i]})`); 
+						// unique[backwardCat[i]].push(`${i} (${this.results[i]})`); 
+						unique[backwardCat[i]].push({subject: i, results: this.results[i]}); 
 					else
-						unique[backwardCat[i]].push(i);
+						unique[backwardCat[i]].push({subject: i});
 				});
 
 
