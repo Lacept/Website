@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>asdasd</title>
+</head>
+<body>
+	<div id="app">
+		<selectize v-model="selectedSubject.input">
+			<optgroup v-for="(val, cat) in categories" v-bind:label="cat">
+				<option v-for="sub in val">{{ sub }}</option>
+			</optgroup>
+		</selectize>
+		<br>
+		<span>thing: {{ selectedSubject.input }}</span>
+
+		<br>
+		
+		<button v-on:click="add">Add to list</button>
+		<br>
+		<button v-on:click="remove">Remove from list</button>
+
+		<br><br>
+
+		<div class="resultsView">
+			<div id="resultContainer">
+				<select v-model="selectedSubject.result" :size="this.addedSubjects.list.size + Object.keys(this.addedSubjects.formatted).length">
+					<optgroup v-for="(val, cat) in addedSubjects.formatted" v-bind:label="cat">
+						<option v-for="sub in val">{{ sub }}</option>
+					</optgroup>
+				</select>
+			</div>
+			<div>
+				Result: <input v-bind:value="results[selectedSubject.result]" v-on:input="updateResults($event.target.value)" type="number" min=1 max=9>
+			</div>
+		</div>
+
+		<br><br>
+
+		<button v-on:click="submitQuery">Query</button>
+
+	</div>
+</body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<script src="https://unpkg.com/vue2-selectize"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css">
+<script>
+
+	let forwardCat = {
+		cat1: ["english", "chinese",],
+		cat2: ["math", "chemistry", "geography",],
+		cat3: ["meme studies"]
+	}
+	let backwardCat = {}
+
+	for (let k in forwardCat)
+	{
+		let arr = forwardCat[k];
+		arr.forEach(a => {
+			backwardCat[a] = k;		
+		});
+	}
+
+	console.dir(backwardCat)
+
+	Vue.component('selectize', Selectize)
+
+	let select = new Vue({
+		el: "#app",
+		data: {
+			categories: forwardCat,
+			selectedSubject: { 
+				input: "",
+				result: ""
+			},
+			addedSubjects: {
+				list: new Set(),
+				formatted: {}
+			},
+			results: {}
+		},
+		methods: {
+			add: function() {
+				console.log(this.selectedSubject.input)
+				
+				let currCat = backwardCat[this.selectedSubject.input];
+
+				// fuck web dev
+				// let selectedIndex = this.categories[currCat].indexOf(this.selectedSubject.input);
+				// console.log(selectedIndex)
+				// if (selectedIndex != -1) this.categories[currCat].splice(selectedIndex, 1);
+
+				this.addedSubjects.list.add(this.selectedSubject.input);
+				this.getSelectedCat();
+			},
+			remove: function() {
+				this.addedSubjects.list.delete(this.selectedSubject.result);
+				this.getSelectedCat();
+			},
+			getSelectedCat: function() { // generate results for the resultset display
+				let unique = {};
+
+				this.addedSubjects.list.forEach(i => {
+					if (!(backwardCat[i] in unique))
+						unique[backwardCat[i]] = [];
+					
+					if (this.results[i])
+						unique[backwardCat[i]].push(`${i} (${this.results[i]})`); 
+					else
+						unique[backwardCat[i]].push(i);
+				});
+
+
+				console.log(this.addedSubjects.list)
+				console.log(this.addedSubjects.formatted)
+				this.addedSubjects.formatted = unique;
+
+			},
+			updateResults: function(val) {
+				if (this.selectedSubject.result)
+				{
+					this.results[this.selectedSubject.result] = Math.min(Math.max(val, 1), 9);
+					this.getSelectedCat()
+				}
+			},
+			submitQuery: function() { // fix when server is done
+				// do calculation here
+
+				// all subjects are in this.addedSubjects.list, you can check their category with backwardCat[subjectStrHere]
+				// finally, get the results with this.results[subjectStrHere]
+
+				fetch("eatshit.com/api/aaaaa", {
+					method: "get",
+					body: whatever
+				}).then(res => res.json).then(json => {
+
+				});
+			}
+		}
+	});
+
+
+</script>
+
+<style>
+
+.resultsView
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.resultsView > div
+{
+	margin: 10px;
+}
+
+#resultContainer
+{
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: top;
+	border: solid black 1px;
+}
+
+#resultContainer select
+{
+	padding: 10px;
+	margin: -5px -20px -5px -5px;
+}
+
+</style>
+
+
