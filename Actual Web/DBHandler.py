@@ -34,7 +34,10 @@ class DBUtil:
         "db": dbfolder + "Poly_2019.db",
         "query": Map({
             "jae": """
-
+                SELECT *
+                FROM Poly_2019
+                WHERE JAE_ELR2B2 >= ?
+                ORDER BY JAE_ELR2B2 ASC
             """
         })
     })
@@ -54,13 +57,21 @@ class DBUtil:
 
     def executeScoreQuery(self, schoolType: SchoolType, query: str, score: Union[int, str]) -> list:
         try:
-            res = self.getConnection(schoolType).execute(query, str(score))
+            res = self.getConnection(schoolType).execute(query, [str(score)])
             return res.fetchall()
         except Exception:
             raise Exception("Error retrieving database results")
 
 
     # only use below functions
+    def convertJson(self, res: list, schoolType: SchoolType) -> list:
+        lis = []
+        _format = ("School", "Cutoff") if schoolType == SchoolType.JC else ("School", "Code", "Name", "Cutoff")
+        for i in res:
+            lis.append(dict(zip(_format, i)))
+        return lis
+            
+
     def getConnection(self, schoolType: SchoolType) -> sqlite3.Connection:
         return self.connection.jc if schoolType == schoolType.JC else self.connection.poly
 
