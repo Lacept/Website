@@ -5,9 +5,9 @@ from json2html import *
 import logging
 
 app = Flask(__name__) #initializes the Flask object
-@app.route('/')
-def root(): 
-    return render_template('index.html')
+@app.route('/<path:filename>') #associates the root() function with the ‘/’ route
+def root(filename):
+    return send_from_directory("templates/Index", filename) #serve up the ‘index.html’ webpage
 ##def calcScore():
 ##    # find how to get the form body here
 ##    # return json {"art": [], "science" : []}
@@ -36,9 +36,9 @@ def root():
 ##db.convertJson(db.getEligibleScience(q1), DBHandler.SchoolType.JC))
 ##db.closeConnections()
 #
-
-@app.route('/show',methods=["POST"]) 
+@app.route('/api/calcScore', methods=["POST"]) #associates the show() function with the ‘/’ route
 def show():
+    #@app.route('/show',methods=["POST"]) 
     L1R5 = request.form['q1'] 
     L1R4 = request.form['q2']
     db = DBUtil.getDBUtil()
@@ -49,7 +49,7 @@ def show():
     JC_Art = json2html.convert(JC_Art)
     Poly = json2html.convert(Poly)
     db.closeConnections()
-    return render_template('show.html', Sci=JC_Sci, Arts=JC_Art, Polytech = Poly) 
+    return render_template(send_from_directory("templates/Show", 'show.html'), Sci=JC_Sci, Arts=JC_Art, Polytech = Poly)  #serve up the ‘show.html’ webpage
 
 
 app.run() #run the app, this must correspond to the variable name you chose

@@ -21,7 +21,7 @@
 				<h1>Depression Meter <span>One Click Depression</span></h1>	
 			</header>
 			<section>
-				<form id="theForm" class="simform" autocomplete="off" method="POST" action='{{url_for("show")}}'>
+				<form id="theForm" class="simform" autocomplete="off" method="POST" action='/api/calcScore'>
 					<div class="simform-inner">
 						<ol class="questions">
 							<li>
@@ -79,9 +79,13 @@
 </html>
 
 <style>
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
 }
 </style>
