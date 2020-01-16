@@ -7,5 +7,5 @@ RUN pip install -r requirements.txt
 
 COPY ["Actual Web/*", "/app/"]
 
-CMD ["python", "web.py"]
+CMD ["python", "/app/web.py"]
 
