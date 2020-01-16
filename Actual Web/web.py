@@ -49,7 +49,7 @@ def show():
     JC_Art = json2html.convert(JC_Art)
     Poly = json2html.convert(Poly)
     db.closeConnections()
-    return render_template(send_from_directory("templates/Show", 'show.html'), Sci=JC_Sci, Arts=JC_Art, Polytech = Poly)  #serve up the ‘show.html’ webpage
+    return render_template('show.html', Sci=JC_Sci, Arts=JC_Art, Polytech = Poly)  #serve up the ‘show.html’ webpage
 
 
 app.run() #run the app, this must correspond to the variable name you chose
