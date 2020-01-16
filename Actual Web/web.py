@@ -1,59 +1,55 @@
-from flask import Flask, send_from_directory, jsonify, request, Response
+from flask import Flask, send_from_directory,render_template, request #import from the flask library the functions Flask and render_template
 from DBHandler import DBUtil
 import DBHandler
+from json2html import *
+import logging
 
-app = Flask(__name__)
-@app.route('/<path:filename>')
-def serve(filename):
-    return send_from_directory("templates", filename)
+app = Flask(__name__) #initializes the Flask object
+@app.route('/')
+def root(): 
+    return render_template('index.html')
+##def calcScore():
+##    # find how to get the form body here
+##    # return json {"art": [], "science" : []}
+##    pass
 
-@app.route("/")
-def root():
-    return send_from_directory("templates", "index.html")
+#
 
-# api to compare score with provided input and return json output with keys: science, art, poly
-@app.route("/api/calcScore", methods=["GET", "POST"])
-def calcScore():
+# #Poly
+# lis_MIPoly = {"MI": [], "poly": []}
+# for i in db.getEligiblePoly(7):
+#     lis["poly"].append(dict(zip(("School", "Code", "Name", "Cutoff"), i)))
+# #MI
+# if L1R4 <= 20:
+#     lis.append({"School": "Millennial Institution", "Cutoff": 20})
 
-    l1r5 = request.form.get("l1r5", None)
-    l1r5 = l1r5 if l1r5 is None or l1r5.isdecimal() else None
+# # JC
+# lis_JC = {"art": [], "science": []}
+# for i in db.getEligibleScience(4):
+#     lis["science"].append(dict(zip(("School", "Cutoff"), i)))
 
-    l1r4 = request.form.get("l1r4", None)
-    l1r4 = l1r4 if l1r4 is None or l1r4.isdecimal() else None
+# for i in db.getEligibleArt(4):
+#     lis["art"].append(dict(zip(("School", "Cutoff"), i)))
+# print(lis)
 
-    if not(l1r4 or l1r5):
-        return Response("Invalid parameters supplied", status=400)
+##db = DBUtil.getDBUtil()
+##db.convertJson(db.getEligibleScience(q1), DBHandler.SchoolType.JC))
+##db.closeConnections()
+#
 
-    if l1r4 and l1r5:
-        a, b = int(l1r4), int(l1r5)
-        if a >= b or not(2 <= b <= 54 and 1 <= a <= 45):
-            return Response("Invalid parameters supplied1", status=400)
-
-
-    res = {
-        "science": [],
-        "art": [],
-        "poly": []
-    }
-    
+@app.route('/show',methods=["POST"]) 
+def show():
+    L1R5 = request.form['q1'] 
+    L1R4 = request.form['q2']
     db = DBUtil.getDBUtil()
+    JC_Sci = db.convertJson(db.getEligibleScience(L1R5), DBHandler.SchoolType.JC)
+    JC_Art = db.convertJson(db.getEligibleArt(L1R5), DBHandler.SchoolType.JC)
+    Poly = db.convertJson(db.getEligiblePoly(L1R4), DBHandler.SchoolType.POLY)
+    JC_Sci = json2html.convert(JC_Sci)
+    JC_Art = json2html.convert(JC_Art)
+    Poly = json2html.convert(Poly)
+    db.closeConnections()
+    return render_template('show.html', Sci=JC_Sci, Arts=JC_Art, Polytech = Poly) 
 
-    try:
-        if l1r5 is not None:
-            res["science"] = db.convertJson(db.getEligibleScience(l1r5), DBHandler.SchoolType.JC)
-            res["art"] = db.convertJson(db.getEligibleArt(l1r5), DBHandler.SchoolType.JC)
-        
-        if l1r4 is not None:
-            res["poly"] = db.convertJson(db.getEligiblePoly(l1r4), DBHandler.SchoolType.POLY)
-            if int(l1r4) <= 20:
-                res["poly"].append({"School": "Millennial Institution", "Code": "", "Name": "", "Cutoff": 20})
-        
-    except Exception as e:
-        return Response(e.message, status=400)
-    finally:
-        db.closeConnections()
-    
 
-    return jsonify(res)
-
-app.run(host="0.0.0.0", port=80)
+app.run() #run the app, this must correspond to the variable name you chose
