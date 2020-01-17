@@ -15,14 +15,52 @@
 .clearfix:after { clear: both; }
 
 body {
-	background-image: linear-gradient( 135deg, #F5CBFF 10%, #C346C2 100%);
+	/* background: linear-gradient(45deg,#4158d0,#c850c0); */
+	/* background-image: linear-gradient( 135deg, #F5CBFF 10%, #C346C2 100%); */
+	/* background-image: url('https://i.kym-cdn.com/entries/icons/original/000/016/546/hidethepainharold.jpg'); */
+	background-image: url('https://external-preview.redd.it/4dKw1SCbbiQHxjS1Pr0lcFF5dj2_ZXb1BhyXJ2yllYo.jpg?auto=webp&s=edaffa3ed671f85956d5604cdbf8ce1aa9d68c22');
+	/* background-image: url('https://external-preview.redd.it/kZe7iBUZXyba7UpGaQ_0azlRYYWwb9IaL4nTPS2e75Y.jpg?auto=webp&s=280a96a441ba64aedb4b8ab589c7aaeb7b8dbfa4'); */
 	/* background: #26C281; */
 	color: rgba(0,0,0,0.45);
 	font-size: 100%;
 	line-height: 1.25;
 	font-family: 'Lato', Arial, sans-serif;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
 }
 
+.btn {
+	border: none;
+	background-color: inherit;
+	padding: 14px 28px;
+	font-size: 16px;
+	cursor: pointer;
+	display: inline-block;
+  }
+
+.example_f {
+border: none;
+color: #FFFFFF;
+text-align: center;
+text-transform: uppercase;
+font-size: 20px;
+padding: 20px;
+transition: all 0.4s;
+cursor: pointer;
+margin: 5px;
+}
+.example_f span {
+cursor: pointer;
+display: inline-block;
+position: relative;
+transition: 0.4s;
+}
+.example_f:hover span:after {
+color: #FFFFFF;
+right: 0;
+}
+  
 a {
 	color: rgba(0,0,0,0.25);
 	text-decoration: none;
@@ -97,13 +135,14 @@ a:hover, a:focus {
 .codrops-icon-prev:before {
 	content: "\e004";
 }
-
+/* 
 section {
 	padding: 5em 2em 10em;
 	background-image: linear-gradient( 135deg, #F5CBFF 10%, #C346C2 100%);
-	/* background: #2dcb89; */
+	background: #2dcb89;
+	background-image: url(https://i.kym-cdn.com/entries/icons/original/000/016/546/hidethepainharold.jpg); #Harold
 	text-align: center;
-}
+} */
 
 section.related {
 	padding: 3em 1em 4em;

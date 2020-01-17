@@ -4,28 +4,38 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 		<meta name="viewport" content="width=device-width, initial-scale=1"> 
-		<title>Minimal Form Interface</title>
-		<meta name="description" content="Minimal Form Interface: Simplistic, single input view form" />
-		<meta name="keywords" content="form, minimal, interface, single input, big form, responsive form, transition" />
-		<meta name="author" content="Codrops" />
-		<link rel="shortcut icon" href="../favicon.ico">
+		<title>😂</title>
+		<meta name="description" content="To assist O Level students in finding the right choice of tertiary education." />
+		<meta name="keywords" content="O level, assist, students, calculate" />
+		<meta name="author" content="Timmy & Pals" />
+		<link rel="shortcut icon" href="yoda.ico">
 		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
 		<link rel="stylesheet" type="text/css" href="css/demo.css" />
 		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 		<script src="js/modernizr.custom.js"></script>
 	</head>
 	<body>
 		<div class="container">
 			<!-- Top Navigation -->
 			<header class="codrops-header">
-				<h1>Depression Meter <span>One Click Depression</span></h1>	
+				<h1>You shall pass!<span>~ Pugdolf</span></h1>	
 			</header>
 			<section>
-				<form id="theForm" class="simform" autocomplete="off" method="POST" action='/api/calcScore'>
+				<form id="theForm" class="simform" autocomplete="off" method="POST" action='/results'>
 					<div class="simform-inner">
 						<ol class="questions">
 							<li>
-								<span><label for="q1">What is your L1R5?</label></span>
+								<span>
+									<label for="q1">
+										What is your L1R5?
+										<div class="button_cont" align="center" style="position: static; float: right; outline : none;">
+											<a class="example_f" href="/How" target="_blank" rel="nofollow">
+												<i class="fas fa-info-circle"></i>
+											</a>
+										</div>
+									</label>
+								</span>
 								<input id="q1" name="q1" type="number" min="2" max="54"/>
 							</li>
 							<li>
@@ -47,9 +57,8 @@
 					<span class="final-message"></span>
 				</form><!-- /simform -->
 				<br>
-				<form action="/How">
-					<input type="submit" value="How to calculate my scores?">
-				</form>
+				
+				
 			</section>
 		</div><!-- /container -->
 		<script src="js/classie.js"></script>
@@ -74,7 +83,7 @@
 
 					// let's just simulate something...
 					var messageEl = theForm.querySelector( '.final-message' );
-					messageEl.innerHTML = 'Thank you! We\'ll be in touch.';
+					messageEl.innerHTML = 'Thank you! Here are the results.';
 					classie.addClass( messageEl, 'show' );
 				}
 			} );

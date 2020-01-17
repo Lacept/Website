@@ -6,41 +6,26 @@ import logging
 
 app = Flask(__name__) #initializes the Flask object
 @app.route('/<path:filename>') #associates the root() function with the ‘/’ route
-def root(filename):
+def routing(filename):
     return send_from_directory("templates/Index", filename) #serve up the ‘index.html’ webpage
-##def calcScore():
-##    # find how to get the form body here
-##    # return json {"art": [], "science" : []}
-##    pass
 
-#
+@app.route("/")
+def root():
+    return send_from_directory("templates/Index", "index.html")
 
-# #Poly
 # lis_MIPoly = {"MI": [], "poly": []}
-# for i in db.getEligiblePoly(7):
-#     lis["poly"].append(dict(zip(("School", "Code", "Name", "Cutoff"), i)))
 # #MI
 # if L1R4 <= 20:
 #     lis.append({"School": "Millennial Institution", "Cutoff": 20})
-
-# # JC
-# lis_JC = {"art": [], "science": []}
-# for i in db.getEligibleScience(4):
-#     lis["science"].append(dict(zip(("School", "Cutoff"), i)))
-
-# for i in db.getEligibleArt(4):
-#     lis["art"].append(dict(zip(("School", "Cutoff"), i)))
-# print(lis)
-
 ##db = DBUtil.getDBUtil()
 ##db.convertJson(db.getEligibleScience(q1), DBHandler.SchoolType.JC))
 ##db.closeConnections()
 #
 @app.route('/How')
 def table1():
-    return render_template('table.html')
+    return send_from_directory('templates/Help','table.html')
 
-@app.route('/api/calcScore', methods=["POST"]) #associates the show() function with the ‘/’ route
+@app.route('/results', methods=["POST"]) #associates the show() function with the ‘/’ route
 def show():
     #@app.route('/show',methods=["POST"]) 
     L1R5 = request.form['q1'] 
@@ -49,11 +34,14 @@ def show():
     JC_Sci = db.convertJson(db.getEligibleScience(L1R5), DBHandler.SchoolType.JC)
     JC_Art = db.convertJson(db.getEligibleArt(L1R5), DBHandler.SchoolType.JC)
     Poly = db.convertJson(db.getEligiblePoly(L1R4), DBHandler.SchoolType.POLY)
+    MI = [{"School": "Millennial Institution", "Cutoff": 20}]
+
     JC_Sci = json2html.convert(JC_Sci)
     JC_Art = json2html.convert(JC_Art)
     Poly = json2html.convert(Poly)
+    MI = json2html.convert(MI)
     db.closeConnections()
-    return render_template('show.html', Sci = JC_Sci, Arts = JC_Art, Polytech = Poly)  #serve up the ‘show.html’ webpage
+    return render_template('show.html', Sci = JC_Sci, Arts = JC_Art, Polytech = Poly, MI = MI)  #serve up the ‘show.html’ webpage
 
-
+#app.run()
 app.run(host="0.0.0.0", port=80) #run the app, this must correspond to the variable name you chose
