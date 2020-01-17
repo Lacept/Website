@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory,render_template, request #import from the flask library the functions Flask and render_template
+from flask import Flask, send_from_directory,render_template, request, url_for #import from the flask library the functions Flask and render_template
 from DBHandler import DBUtil
 import DBHandler
 from json2html import *
@@ -36,6 +36,10 @@ def root(filename):
 ##db.convertJson(db.getEligibleScience(q1), DBHandler.SchoolType.JC))
 ##db.closeConnections()
 #
+@app.route('/How')
+def table1():
+    return render_template('table.html')
+
 @app.route('/api/calcScore', methods=["POST"]) #associates the show() function with the ‘/’ route
 def show():
     #@app.route('/show',methods=["POST"]) 
@@ -49,7 +53,7 @@ def show():
     JC_Art = json2html.convert(JC_Art)
     Poly = json2html.convert(Poly)
     db.closeConnections()
-    return render_template('show.html', Sci=JC_Sci, Arts=JC_Art, Polytech = Poly)  #serve up the ‘show.html’ webpage
+    return render_template('show.html', Sci = JC_Sci, Arts = JC_Art, Polytech = Poly)  #serve up the ‘show.html’ webpage
 
 
-app.run() #run the app, this must correspond to the variable name you chose
+app.run(host="0.0.0.0", port=80) #run the app, this must correspond to the variable name you chose

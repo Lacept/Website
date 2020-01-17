@@ -2,6 +2,9 @@
 <html>
     <head>
         <title>Show page</title>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+		<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     </head>
     <body>
     JC_Science: {{Sci|safe}} 
@@ -10,4 +13,11 @@
     <br>
      Polytechnic: {{Polytech|safe}}
     </body>
+	
+	<script>
+	
+	$("table").each(function() { $(this).DataTable() });
+	
+	</script>
+	
 </html>
