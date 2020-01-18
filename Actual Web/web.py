@@ -44,4 +44,4 @@ def show():
     return render_template('show.html', Sci = JC_Sci, Arts = JC_Art, Polytech = Poly, MI = MI)  #serve up the ‘show.html’ webpage
 
 #app.run()
-app.run(host="0.0.0.0", port=80) #run the app, this must correspond to the variable name you chose
+app.run() #run the app, this must correspond to the variable name you chose
