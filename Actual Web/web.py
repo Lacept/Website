@@ -38,10 +38,10 @@ def show():
     if int(L1R4) <= 20:
         MI = [{"School": "Millennial Institution", "Cutoff": 20}]
 
-    JC_Sci = json2html.convert(JC_Sci)
-    JC_Art = json2html.convert(JC_Art)
-    Poly = json2html.convert(Poly)
-    MI = json2html.convert(MI)
+    JC_Sci = json2html.convert(JC_Sci, table_attributes="id=\"table_id\" class=\"display\"")
+    JC_Art = json2html.convert(JC_Art, table_attributes="id=\"table_id\" class=\"display\"")
+    Poly = json2html.convert(Poly, table_attributes="id=\"table_id\" class=\"display\"")
+    MI = json2html.convert(MI, table_attributes="id=\"table_id\" class=\"display\"")
     db.closeConnections()
     return render_template('show.html', Sci = JC_Sci, Arts = JC_Art, Polytech = Poly, MI = MI)  #serve up the ‘show.html’ webpage
 
