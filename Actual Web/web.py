@@ -34,7 +34,9 @@ def show():
     JC_Sci = db.convertJson(db.getEligibleScience(L1R5), DBHandler.SchoolType.JC)
     JC_Art = db.convertJson(db.getEligibleArt(L1R5), DBHandler.SchoolType.JC)
     Poly = db.convertJson(db.getEligiblePoly(L1R4), DBHandler.SchoolType.POLY)
-    MI = [{"School": "Millennial Institution", "Cutoff": 20}]
+    MI = []
+    if int(L1R4) <= 20:
+        MI = [{"School": "Millennial Institution", "Cutoff": 20}]
 
     JC_Sci = json2html.convert(JC_Sci)
     JC_Art = json2html.convert(JC_Art)
@@ -44,4 +46,4 @@ def show():
     return render_template('show.html', Sci = JC_Sci, Arts = JC_Art, Polytech = Poly, MI = MI)  #serve up the ‘show.html’ webpage
 
 #app.run()
-app.run() #run the app, this must correspond to the variable name you chose
+app.run(host="0.0.0.0", port=80) #run the app, this must correspond to the variable name you chose
