@@ -6,18 +6,29 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"
+      href="{{url_for('static',filename = 'style.css')}}"
     />
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
   </head>
   <body>
-    JC Science Stream (Updated 2019): {{Sci|safe}}
+    JC Science Stream (Updated 2019):
     <br />
-    JC Arts Stream (Updated 2019): {{Arts|safe}}
+    {{Sci|safe}}
     <br />
-    Millennia Institute (Updated 2019): {{MI|safe}}
     <br />
-    Polytechnic (Updated 2019): {{Polytech|safe}}
+    JC Arts Stream (Updated 2019):
+    <br />
+    {{Arts|safe}}
+    <br />
+    <br />
+    Polytechnic (Updated 2019):
+    <br />
+    {{Polytech|safe}}
+    <br />
+    <br />
+    Millennia Institute (Updated 2019):
+    <br />
+    {{MI|safe}}
   </body>
 
   <script>
