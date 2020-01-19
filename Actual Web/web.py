@@ -21,9 +21,13 @@ def root():
 ##db.convertJson(db.getEligibleScience(q1), DBHandler.SchoolType.JC))
 ##db.closeConnections()
 #
-@app.route('/How')
+@app.route('/How_L1R5')
 def table1():
-    return send_from_directory('templates/Help','table.html')
+    return send_from_directory('templates','table_R5.html')
+
+@app.route('/How_L1R4')
+def table2():
+    return send_from_directory('templates','table_R4.html')
 
 @app.route('/results', methods=["POST"]) #associates the show() function with the ‘/’ route
 # def show():
@@ -73,5 +77,5 @@ def show():
     db.closeConnections()
     return render_template('show.html', Sci = JC_Sci, Arts = JC_Art, Polytech = Poly, MI = MI)  #serve up the ‘show.html’ webpage
 
-#app.run()
-app.run(host="0.0.0.0", port=80) #run the app, this must correspond to the variable name you chose
+app.run()
+#app.run(host="0.0.0.0", port=80) #run the app, this must correspond to the variable name you chose

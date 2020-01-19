@@ -14,7 +14,7 @@ table.dataTable {
      * Body styles
      */
 }
-/* Background Colour and Shit and CSS Sucks balls and ur dumb*/
+/* Background Colour and Shit and CSS Sucks balls and ur dumb Opacity for Headers*/
 table.dataTable thead th,
 table.dataTable tfoot th {
   border-top-left-radius: 10px;
@@ -23,7 +23,7 @@ table.dataTable tfoot th {
   font-size: 18px;
   color: #ffffff;
   font-weight: bold;
-  background-color: #000000;
+  background-color: rgba(0, 0, 0, 0.75);
 }
 table.dataTable thead th,
 table.dataTable thead td {
@@ -37,7 +37,7 @@ table.dataTable thead td:active {
 table.dataTable tfoot th,
 table.dataTable tfoot td {
   padding: 10px 18px 6px 18px;
-  border-top: 1px solid pink;
+  border-top: 1px solid white;
 }
 table.dataTable thead .sorting,
 table.dataTable thead .sorting_asc,
@@ -65,10 +65,10 @@ table.dataTable thead .sorting_desc_disabled {
   background-image: url("sort_desc_disabled.png");
 }
 
-/* Font colour and Opacity */
+/* Font colour and Opacity of Datatable */
 table.dataTable tbody tr {
   background-color: white;
-  opacity: 80%;
+  opacity: 60%;
   color: black;
   overflow: hidden;
 }
